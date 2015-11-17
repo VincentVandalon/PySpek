@@ -31,9 +31,23 @@ for filName in inputFiles:
    basename,ext= os.path.splitext(filName)
    spec1=PySpek(filName)
    x,y=spec1.readSpec(perSecond=True)
+   spec1.close()
 
    plt.plot(x,y,marker='',linestyle='-',color='red')
    plt.xlabel('Wavelength (nm)')
    plt.ylabel('Intensity ( $s^{-1}$pixel$^{-1}$)')
    plt.savefig('%s.pdf'%basename)
 
+plt.clf()
+
+filName='image.spe'
+ax=plt.subplot(111)
+basename,ext= os.path.splitext(filName)
+image=PySpek(filName)
+xdata,imdat=image.readImage()
+image.close()
+plt.imshow(imdat)
+xgrid=N.arange(0,len(xdata))
+plt.xticks(xgrid[::200],map(lambda s:'%.0f'%s,xdata[::200]))
+plt.xlabel('Wavelength (nm)')
+plt.savefig('%s.pdf'%"image")

@@ -13,6 +13,10 @@
 #License along with NonlinearModel.  If not, see
 #<http://www.gnu.org/licenses/>.  
 
+#The image reading algorithm was inspired by
+#http://scipy-cookbook.readthedocs.org/items/Reading_SPE_files.html
+#This project aims to create a complete toolkit to read all types of SPE files
+
 import numpy as N
 import scipy as sp
 import matplotlib.pyplot as plt
@@ -148,6 +152,7 @@ class PySpek(object):
     def close(self):
         self._fid.close()
 
+    #Read some or 1 spectra in file
     def readSpec(self,startFrame=-1,endFrame=-1,perSecond=True):
         self.read_xcal()
         if perSecond ==  True: 
@@ -157,9 +162,21 @@ class PySpek(object):
            x,y=self.load_img(startFrame,endFrame)[::]
         return x,y
 
+    #Read all spectra in file
     def readSpecs(self,perSecond=True):
         self.read_xcal()
         return self.readSpec(0,self.nrFrames,perSecond)
+
+    #Read file as image
+    def readImage(self):
+        #TODO: select right data type somehow
+        scale=1
+        self.read_xcal()
+        #NOTE: axis are swapped 
+        x=self.convertPixels(N.arange(0,self._xdim))
+        img = self.read_at(4100, self._xdim * self._ydim, N.uint16)
+        print self._xdim, self._ydim
+        return x,img.reshape((self._ydim,self._xdim))
 
 class ROIObject:
    i=0
