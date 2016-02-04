@@ -40,7 +40,7 @@ for filName in inputFiles:
 
 plt.clf()
 
-filName='image.spe'
+filName='1310-0304299.SPE'
 ax=plt.subplot(111)
 basename,ext= os.path.splitext(filName)
 image=PySpek(filName)
@@ -48,6 +48,6 @@ xdata,imdat=image.readImage()
 image.close()
 plt.imshow(imdat)
 xgrid=N.arange(0,len(xdata))
-plt.xticks(xgrid[::200],map(lambda s:'%.0f'%s,xdata[::200]))
+#plt.xticks(xgrid[::100],map(lambda s:'%.0f'%s,xdata[::100]))
 plt.xlabel('Wavelength (nm)')
 plt.savefig('%s.pdf'%"image")
