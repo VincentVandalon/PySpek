@@ -6,6 +6,13 @@ PySpek can handle SPE files containing spectra or images, even if multiple spect
 The functionality for spectral, i.e. fully binning the chip perpendicular to the disperion direciton, 
 has been tested extensively. The funcitonality for imaging is being developed and input is very welcome.
 
+# Installation
+It is available from pypi, so just run:
+~~~
+pip install PySpek
+~~~
+
+# Usage
 Typical usage will look something like this:
 ~~~
 spec1=PySpek(filName)
