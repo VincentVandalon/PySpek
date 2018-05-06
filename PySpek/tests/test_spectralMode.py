@@ -12,8 +12,7 @@
 # the GNU General Public License along with <++>. If not, see
 # <http://www.gnu.org/licenses/>. "
 
-from PySpek import PySpek
-from PySpek import ErroneousSpectrumType
+from PySpek import *
 import pytest
 
 

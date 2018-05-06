@@ -9,7 +9,6 @@
 # PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 # You should have received a copy of the GNU General Public License along with
 # NonlinearModel.  If not, see <http://www.gnu.org/licenses/>.
-import numpy as N
 import matplotlib.pyplot as plt
 import os
 from PySpek import PySpek
@@ -42,6 +41,5 @@ image = PySpek(filName)
 xdata, imdat = image.readImage()
 image.close()
 plt.imshow(imdat)
-xgrid = N.arange(0, len(xdata))
 plt.xlabel('Wavelength (nm)')
 plt.savefig('1310-0304299.pdf')
