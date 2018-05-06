@@ -13,6 +13,8 @@
 # <http://www.gnu.org/licenses/>. "
 
 from PySpek import PySpek
+from PySpek import ErroneousSpectrumType
+import pytest
 
 
 def test_size():
@@ -33,3 +35,6 @@ def test_readSpec():
     assert y[-1] * spec.aqTime == yUncorrected[-1]  # Check time scaling
     assert yUncorrected[-1] == 135  # Check correct readout
     assert abs(x[-1] - 664.47490223) < 0.00001  # idem
+    with pytest.raises(ErroneousSpectrumType):
+        specImage = PySpek('1310-0304299.SPE')
+        specImage.readSpec()
