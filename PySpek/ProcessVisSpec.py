@@ -33,13 +33,18 @@ for filName in inputFiles:
 
 plt.clf()
 
-# Now render image
+# Now parse and show a recorded image
 filName = '1310-0304299.SPE'
-ax = plt.subplot(111)
+filName = 'read_spe/lampe_dt.spe'
 basename, ext = os.path.splitext(filName)
+# Parse data
 image = PySpek(filName)
 xdata, imdat = image.readImage()
 image.close()
+# Plot image
 plt.imshow(imdat)
-plt.xlabel('Wavelength (nm)')
+plt.colorbar()
+# plt.xlabel('Wavelength (nm)')
+plt.xlabel('Pixel ')
+plt.ylabel('Pixel ')
 plt.savefig('1310-0304299.pdf')

@@ -129,8 +129,8 @@ class PySpek(object):
             else:
                 raise Exception("Unknown datatype in header")
 
-            x = self.convertPixels(N.arange(0, self._xdim*self._ydim))
-            return x, img.reshape((self._ydim, self._xdim))[0]
+            x = self.convertPixels(N.arange(0, self._xdim))
+            return x, img.reshape((self._ydim, self._xdim))
         else:
             frames = []
             for i in range(startFrame, endFrame):
@@ -149,30 +149,33 @@ class PySpek(object):
                     raise Exception("Unknown datatype in header")
 
                 frames.append(img.reshape((self._ydim, self._xdim))[0])
-            x = self.convertPixels(N.arange(0, self._xdim*self._ydim))
+            x = self.convertPixels(N.arange(0, self._xdim))
             return x, frames
 
     def close(self):
         self._fid.close()
 
     def readSpec(self, startFrame=-1, endFrame=-1, perSecond=True):
-        if self.get_size()[1] !=1:
+        """ Read first spectrum in file or a sequence of spectra """
+        if self.get_size()[1] != 1:
             raise ErroneousSpectrumType()
 
-        """ Read some or 1 spectra in file """
         self.read_xcal()
         if perSecond:
-            x, y = self._load_img(startFrame, endFrame)[::]
+            x, y = self._load_img(startFrame, endFrame)
             y = y/self.aqTime
         else:
-            x, y = self._load_img(startFrame, endFrame)[::]
+            x, y = self._load_img(startFrame, endFrame)
+        # If single spectrum, strip the extra dimension
+        if N.shape(y)[0] == 1:
+            y = y[0]
         return x, y
 
     def readSpecs(self, perSecond=True):
         """ Read all spectra in file """
-        if self.get_size()[1] !=1:
+        if self.get_size()[1] != 1:
             raise ErroneousSpectrumType()
-        self.read_xcal()
+        self.read_xcal() #needed to ensure access to nrFrames...
         return self.readSpec(0, self.nrFrames, perSecond)
 
     def readImage(self):
@@ -183,10 +186,21 @@ class PySpek(object):
         # scale = 1
         self.read_xcal()
         # NOTE: axis are swapped
-        x = self.convertPixels(N.arange(0, self._xdim))
-        img = self.read_at(4100, self._xdim * self._ydim, N.uint16)
-        print(self._xdim, self._ydim)
-        return x, img.reshape((self._ydim, self._xdim))
+        # x = self.convertPixels(N.arange(0, self._xdim))
+        # img = self.read_at(4100, self._xdim * self._ydim, N.uint16)
+        # imgSize = self._xdim * self._ydim
+        # if self.datatype == 0:
+        #     img = self.read_at(4100, imgSize, N.float32)
+        # elif self.datatype == 1:
+        #     img = self.read_at(4100, imgSize, N.int32)
+        # elif self.datatype == 2:
+        #     img = self.read_at(4100, imgSize, N.int16)
+        # elif self.datatype == 3:
+        #     img = self.read_at(4100, imgSize, N.uint16)
+        # print(self._xdim, self._ydim)
+        # return x, img.reshape((self._ydim, self._xdim))
+        x, img = self._load_img(-1, -1)
+        return x, img
 
 
 class ErroneousSpectrumType(Exception):
