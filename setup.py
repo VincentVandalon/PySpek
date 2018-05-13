@@ -7,7 +7,7 @@ setup(
       author='Vincent Vandalon',
       author_email='vincent@vandalon.nl',
       url='https://github.com/VincentVandalon/PySpek',  # use the URL to the github repo
-      download_url='https://github.com/VincentVandalon/PySpek/archive/0.5.tar.gz',
+      download_url='https://github.com/VincentVandalon/PySpek/archive/0.6.tar.gz',
       keywords=['spectra', 'science', 'data'],
       classifiers=[],
 )
