@@ -2,7 +2,7 @@ from distutils.core import setup
 setup(
       name='PySpek',
       packages=['PySpek'],  # this must be the same as the name above
-      version='0.5',
+      version='0.6',
       description='Library for parsing spectra and images from Princeton Instruments SPE files',
       author='Vincent Vandalon',
       author_email='vincent@vandalon.nl',

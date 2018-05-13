@@ -1,0 +1,8 @@
+- ensure valid .pypirc file
+- make tag
+   git tag 0.6 -m "Some message"
+- push tag
+   git push --tags origin master
+- push version to pypi
+   python setup.py sdist upload -r pypi
+
